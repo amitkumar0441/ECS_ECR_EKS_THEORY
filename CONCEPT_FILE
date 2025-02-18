@@ -1,8 +1,11 @@
-[For containerization IN AWS, we have ecs :- Elastic container service. - Main benefit ecs provides autoscaling and autohealing of containers. 
+For containerization IN AWS, we have ecs :- Elastic container service. - Main benefit ecs provides autoscaling and autohealing of containers. 
 In ECS, we have to option to run the containers :- fargate(serverless architecture) and ec2 instances. 
 Main components of ecs :- CLUSTER - TASK DEFINITION , TASK. 
 ECR- for pulling images for ecs. ECR- REPOSITORY- IMAGE
 In order to expose ecs we have two options :- use public ip address or go with application loadbalancer. 
+ECR :- Elastic container registry :- By default in ecr we get private repository 
+benefit of ecr :- easy and better integeration with other aws services. 
+Most import feature :- SCAN ON PUSH. 
 In docker , there is no capability of autohealing and autoscaling.
 
 # Login to ECR (replace <region> and <account-id> with your actual values)
