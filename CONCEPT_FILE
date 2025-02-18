@@ -1,4 +1,4 @@
-For containerization IN AWS, we have ecs :- Elastic container service. - Main benefit ecs provides autoscaling and autohealing of containers. 
+A) For containerization IN AWS, we have ecs :- Elastic container service. - Main benefit ecs provides autoscaling and autohealing of containers. 
 In ECS, we have to option to run the containers :- fargate(serverless architecture) and ec2 instances. 
 Main components of ecs :- CLUSTER - TASK DEFINITION , TASK. 
 ECR- for pulling images for ecs. ECR- REPOSITORY- IMAGE
@@ -18,7 +18,29 @@ $ docker build -t <account-id>.dkr.ecr.<region>.amazonaws.com/<repo-name>:latest
 $ docker push <account-id>.dkr.ecr.<region>.amazonaws.com/<repo-name>:latest
  
 
-For kubernetes , we have 4 methods :-
+B) For kubernetes , we have 4 methods :-
 EKS/AKS/GKS - MINIKUBE - KIND - KUBEADM 
 
-EKS :- ELASTIC KUBERNETES SERVICES.
+C) EKS :- ELASTIC KUBERNETES SERVICES.
+Why should eks use for production level ?
+Because self managed kubernete is tedious task and error prone. 
+Elastic kubernetes service is a managed kubernetes service of aws.
+Architecture :- Control plane and Worker node
+Important components of control plane :- api server, scheduler, etcd and controller manager
+In EKS- we configure only control plane and for worker node we can use fargate and ec2 instances.
+Fargate :- serverless compute- will be managed by aws
+Ingress :- for exposing pods for outside world, it routes traffic inside cluster, But single ingress will not work , we have to also configure ingress controller . 
+Ingress controller is an ALB controller which manage request from outside world and send to ingress.
+
+steps :- 
+* install kubectl and eksctl on ubuntu system.
+* install aws cli.- aws configure
+* create cluster through eksctl but used different namespace :- fargate profile is namespace in eks.
+* Iam identity providers:- so that eks can communicate with other aws services.
+* kubectl apply -f deploymentfile url.:- defined about deployment, service and ingress.
+Now most important setup ingress controller (ALB controller)- yeh bhi ek pod hota hia.
+* create oidc identity provider
+* Iam policy for alb controller.
+* create Iam role
+* create alb controller by using helm. 
+
