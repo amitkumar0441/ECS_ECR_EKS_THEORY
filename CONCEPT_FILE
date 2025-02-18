@@ -42,5 +42,5 @@ Now most important setup ingress controller (ALB controller)- yeh bhi ek pod hot
 * create oidc identity provider
 * Iam policy for alb controller.
 * create Iam role
-* create alb controller by using helm. 
+* create alb controller by using helm. :- Helm is a package manager for Kubernetes 
 
