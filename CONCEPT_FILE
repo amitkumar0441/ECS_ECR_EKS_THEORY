@@ -31,13 +31,16 @@ Important components of control plane :- api server, scheduler, etcd and control
 In EKS- we configure only control plane and for worker node we can use fargate and ec2 instances.
 Fargate :- serverless compute- will be managed by aws
 Ingress :- for exposing pods for outside world, it routes traffic inside cluster, But single ingress will not work , we have to also configure ingress controller . 
-Ingress controller is an ALB controller which manage request from outside world and send to ingress.
+Ingress controller is an ALB controller which manage request from outside world and send to ingress resource.
+For an Ingress Controller, you have several options depending on your Kubernetes setup and requirements:-
+a) NGINX Ingress Controller 
+b) AWS ALB Ingress Controller (For AWS)
 
 steps :- 
 * install kubectl and eksctl on ubuntu system.:- eksctl CLI is used to work with EKS clusters.
 
 * install aws cli.- aws configure
-* create cluster through eksctl but used different namespace :- fargate profile is namespace in eks.:- 
+* create cluster through eksctl but used different namespace :- 
 
 --------------------------------eksctl create cluster --name my-cluster --region region-code --fargate
                                 eksctl delete cluster --name my-cluster --region region-code
@@ -57,13 +60,15 @@ eksctl create fargateprofile \
 * check it on :- eks cluster- compute tab - fargate profile. 
 
 * check config-context so that you can on which platform will my kubectl apply -f command is going to be executed on minikube or eks by using this :- 
-kubectl config current-context
-* kubectl apply -f deploymentfileurl.:- defined about deployment, service and ingress.
+----------kubectl config current-context
+
+* --------kubectl apply -f deploymentfile.yml                       :- defined about deployment, service and ingress.
 ----------kubectl get ingress -n game-2048  - but right now ingress doesn't have address of ingress controller 
 ----------kubectl get services -n game-2048
+----------kubectl get deployments -n game-2048
 ----------kubectl get pods -n game-2048
 
-* crate ingress-controller for ingress :- 
+* Create  AWS ALB ingress-controller for ingress resource :- 
 
 1) eksctl utils associate-iam-oidc-provider --cluster mycustomclusterfor --approve     - will create odic identity providers so that it can communicate with aws resources
 
@@ -96,4 +101,4 @@ helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
   --set region=<regionname> \
   --set vpcId=<vpcid>
 
-8) kubectl get deployments.apps -n kube-system aws-load-balancer-controller 
+8) kubectl get deployments -n kube-system aws-load-balancer-controller 
